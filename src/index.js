@@ -1,7 +1,6 @@
 import './style.css';
+import './images/Focust-logo.png';
 
-const body = document.body;
-const header = document.createElement("h1");
-header.textContent = "Howdy, Partner";
 
-body.appendChild(header);
+
+

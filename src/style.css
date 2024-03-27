@@ -1,3 +1,136 @@
-body {
-    background-color: red;
+html, body {
+    height: 100%;
+    margin: 0;
 }
+
+body {    
+    display: grid;
+    grid-template-columns: 1fr max(60vw, 60%) 1fr;
+}
+
+a {
+    text-decoration: none;
+    color: black;
+}
+
+.sidebar {
+    background-color: #fafafa;
+    height: 100%;
+    min-width: 15vw;
+    padding: 2rem;
+}
+
+.logo-section img {
+    text-align: center;
+    max-width: 150px;
+}
+
+main {
+    padding: 5rem 15rem;
+    overflow: hidden auto;
+    min-height: 380px;
+    display: flex;
+    flex-direction: column;
+}
+
+.task-container {
+    display: flex;
+    flex-direction: column;
+}
+
+.project-section {
+    margin-top: 5vh;
+    height: 100%;
+}
+
+.project-list-wrapper {
+    display: grid;
+    grid-template-rows: auto;
+}
+
+.project-menu-title {
+    margin-top: 10px;
+}
+
+.current-project {
+    display: flex;
+    flex-grow: 1;
+}
+
+.task, .project-section-header {
+    border-bottom: 1px solid lightgray;
+    padding-bottom: 10px;
+}
+
+.project-section-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+
+button {
+    background-color: transparent;
+}
+
+
+.feather-plus {
+    height: 15px;
+    width: 15px;
+    padding-right: 2px;
+}
+
+.addtask, .addproject{
+    border: none;
+    display: inline-flex;
+    vertical-align: middle;
+    padding: 8px;
+}
+
+.side-btn:hover {
+    border: solid 1px gray;
+    border-radius: 5px;
+    vertical-align: middle;
+
+}
+
+.main-content-btn {
+    color: rgb(177, 177, 177);
+}
+
+.addproject:hover {
+    color: rgb(177, 177, 177);
+}
+
+.addtask:hover {
+    color: black;
+}
+
+.addtask:hover, .addproject:hover {
+    cursor: pointer;
+    border: none;
+}
+
+.task-project { 
+    display: flex;
+    justify-content: end;
+}
+
+.user-options {
+    display: flex;
+    align-items: start;
+    justify-content: center;
+}
+
+.user-options > button {
+    margin: 15px 10px;
+    padding: 5px;
+    border-radius: 5px;
+    border: none;
+}
+
+.user-options > button:hover {
+    cursor: pointer;
+    color: rgb(177, 177, 177);
+}
+
