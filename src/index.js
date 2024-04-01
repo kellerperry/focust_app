@@ -171,11 +171,14 @@ function getTaskInput() {
     const dueDate = document.getElementById('task-due-date').value;
     let projectName = document.getElementById('task-project-input').value;
     let project;
-    if (projectName === undefined) {
+    if (projectName === "") {
         projectName = "Inbox";
+        project = projectName;
+    } else {
+        let newProject = new Project(projectName);
+        projectStorage.push(newProject);
+        project = newProject.name;
     }
-    project = new Project(projectName);
-    projectStorage.push(project);
 
 
     return new Task(name, priority, dueDate, project);
@@ -184,9 +187,9 @@ function getTaskInput() {
 function addTask (event) {
     event.preventDefault();
     const newTask = getTaskInput();
-    const project = newTask.project;
-    console.log(newTask)
-    console.log(project)
+    const projectName = newTask.project;
+    const project = getProject(projectName);
+    
     if (newTask.name === ""){
         alert("Please give your task a name.")
     } else {
@@ -286,13 +289,17 @@ function createProjectLink(project) {
 function loadProjectList(projectArr) {
     const projectList = document.getElementById('project-list-container');
     refreshList(projectList);
-    console.log(projectList)
     for(let project in projectArr) {
         createProjectLink(projectArr[project]);
     }
 }
 
 
+function getProject(project) {
+   const rightProject = projectStorage.find((item) => 
+        item.name === project)
+    return rightProject;
+}
 
 /* CSS Related Code
 ____________________________ */
