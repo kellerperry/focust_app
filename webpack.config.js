@@ -7,7 +7,7 @@ module.exports = {
   devtool: 'inline-source-map',
   devServer: {
     static: './dist',
-    watchFiles: ['./src/template.html'],
+    watchFiles: ['./src/main.html'],
   },
   output: {
     filename: 'main.js',
@@ -15,7 +15,7 @@ module.exports = {
   },
   plugins: [
         new HtmlWebpackPlugin({
-            template: './src/template.html',
+            template: './src/main.html',
         }),
       ],
   module: {
