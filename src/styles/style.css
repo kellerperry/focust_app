@@ -1,0 +1,253 @@
+html, body {
+    height: 100%;
+    margin: 0;
+    font-family: sans-serif;
+    font-size: 16px;
+}
+
+body {    
+    display: grid;
+    grid-template-columns: minmax(250px, 425px) min(80%, 43.75rem);
+}
+
+a {
+    text-decoration: none;
+    color: black;
+}
+
+button {
+    background-color: transparent;
+}
+
+/* Sidebar _____________ */
+
+
+.sidebar {
+    background-color: #fafafa;
+    height: 100vh;
+    min-width: 15vw;
+    max-width: 200px;
+    padding: 1rem;
+}
+
+.logo-section {
+    display: flex;
+    justify-content: center;
+}
+
+.logo-section img {
+    max-width: 150px;
+}
+
+.project-section {
+    margin-top: 5vh;
+}
+
+#project-list-container {
+    display: grid;
+    grid-template-rows: auto;
+    gap: 15px;
+    justify-content: center;
+}
+
+.project-menu-title {
+    margin-top: 10px;
+}
+
+.project-menu-title:hover {
+    cursor: pointer;
+}
+
+.current-project {
+    display: flex;
+    flex-grow: 1;
+}
+
+.task-container, .project-section-header {
+    border-bottom: 1px solid lightgray;
+    padding-bottom: 10px;
+}
+
+.project-section-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+
+
+/* Main Body __________ */
+
+main {
+    width: 100%;
+    padding: 5rem 15rem;
+    display: flex;
+    flex-direction: column;
+    align-content: center;
+}
+
+.task-list-container {
+    display: flex;
+    flex-direction: column;
+}
+
+.task-section-header {
+    font-size: 3rem;
+}
+
+/* Task Modal & Form __________________ */
+
+#taskDialog {
+    min-width: 550px;
+    border: none;
+    border-radius: 10px;
+    box-shadow: 2px 2px 10px 2px lightgray;
+    margin-bottom: 70vh;
+}
+
+dialog::backdrop {
+    opacity: 0;
+}
+
+
+#addTaskForm {
+    display: flex;
+    flex-direction: column;
+}
+
+form {
+    padding: 1rem;
+}
+
+form > div {
+    flex-grow: 1;
+}
+
+form > div button {
+    border: 1px lightgray solid;
+    border-radius: 5px;
+    padding: 6px 15px;
+    font-weight: 600;
+    color: rgb(101, 101, 101);
+}
+
+form > div button:hover {
+    background-color: rgb(189, 189, 189);
+    color: white;
+    cursor: pointer;
+} 
+
+#confirm-add-btn {
+    background-color: rgb(109, 108, 179);
+    color: white;
+}
+
+#confirm-add-btn:hover {
+    background-color: rgb(134, 133, 215);
+}
+
+#cancel-add-btn {
+    background-color: rgb(228, 228, 228);
+}
+
+#cancel-add-btn:hover {
+    background-color: rgb(241, 241, 241);
+    color: rgb(101, 101, 101);
+}
+
+#topFormSection {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+#priority-div {
+    display: flex;
+    gap: 10px;
+}
+
+#bottomFormSection {
+    display: flex;
+    justify-content: end;
+    gap: 10px;
+}
+
+#task-name-input {
+    border: none;
+    border-radius: 10px;
+    font-size: 1.25rem;
+    padding: 10px 0px 10px 10px;
+    color: rgb(60, 60, 60);
+}
+
+#task-name-input:focus {
+    outline: 1px solid lightgray;
+}
+
+
+
+
+.feather-plus {
+    height: 15px;
+    width: 15px;
+    padding-right: 2px;
+}
+
+.addtask, .addproject{
+    border: none;
+    display: inline-flex;
+    vertical-align: middle;
+    padding: 8px;
+}
+
+#addTaskMainBtn {
+    margin-top: 1rem;
+}
+
+.side-btn:hover {
+    border: solid 1px gray;
+    border-radius: 5px;
+    vertical-align: middle;
+
+}
+
+.main-content-btn {
+    color: rgb(177, 177, 177);
+}
+
+.addproject:hover {
+    color: rgb(177, 177, 177);
+}
+
+.addtask:hover {
+    color: black;
+}
+
+.addtask:hover, .addproject:hover {
+    cursor: pointer;
+    border: none;
+}
+
+.task-project { 
+    display: flex;
+    justify-content: end;
+}
+
+.user-options {
+    display: flex;
+    align-items: start;
+    justify-content: center;
+}
+
+.user-options > button {
+    margin: 15px 10px;
+    padding: 5px;
+    border-radius: 5px;
+    border: none;
+}
+
+.user-options > button:hover {
+    cursor: pointer;
+    color: rgb(177, 177, 177);
+}
+

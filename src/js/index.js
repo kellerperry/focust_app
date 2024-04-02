@@ -1,5 +1,5 @@
-import './style.css';
-import { loadImages } from './loadImages';
+import '../styles/style.css'
+import { loadImages } from '../loadImages';
 import Task from './Task';
 import Project from './Project';
 
@@ -94,7 +94,7 @@ function loadTaskDialog() {
 }
 
 
-function getTaskInput() {
+function getDialogTaskInput() {
     const name = document.getElementById('task-name-input').value;
     const priority = document.getElementById('priority-div').value;
     const dueDate = document.getElementById('task-due-date').value;
@@ -112,9 +112,13 @@ function getTaskInput() {
     return new Task(name, priority, dueDate, project);
 }
 
+function getTaskCardInput() {
+    const name = document.getele
+}
+
 function addTask (event) {
     event.preventDefault();
-    const newTask = getTaskInput();
+    const newTask = getDialogTaskInput();
     const projectName = newTask.project;
     const project = getProject(projectName);
     
@@ -129,6 +133,14 @@ function addTask (event) {
         taskDialog.close();
     }
 }
+
+function removeTask (task) {
+    const project = task.project;
+    const findProject = projectStorage.find((item) => item.name === project);
+    findProject.deleteTask(task);
+    loadAllTasks();
+}
+
 
 function closeDialog (event) {
     event.preventDefault();
@@ -150,16 +162,25 @@ function createTaskCard(task) {
     const taskContainer = document.createElement('div');
     const taskTitle = document.createElement('p');
     const taskProject = document.createElement('a');
+    const deleteTaskBtn = document.createElement('button');
 
     taskContainer.setAttribute('class', 'task-container');
     taskTitle.setAttribute('class', 'taskTitle');
     taskProject.setAttribute('class', "task-project");
+    deleteTaskBtn.setAttribute('class', "taskCard-delete-task")
     
     taskTitle.innerText = task.name;
     taskProject.innerText = task.project;
+    deleteTaskBtn.innerText = "X";
+
+    deleteTaskBtn.addEventListener('click', () => {
+        removeTask(task);
+    });
 
     taskContainer.appendChild(taskTitle);
+    taskContainer.appendChild(deleteTaskBtn);
     taskContainer.appendChild(taskProject);
+    
 
     taskListContainer.appendChild(taskContainer);
 }
@@ -197,6 +218,7 @@ function loadAllTasks() {
         }
     }
 }
+
 
 // function displayTasks() {
 //     refreshTaskList();
