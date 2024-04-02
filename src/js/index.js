@@ -19,13 +19,23 @@ ___________________________________ */
 
 const addTaskMainBtn = document.querySelector('#addTaskMainBtn');
 
-addTaskMainBtn.addEventListener('click', (e) => {
+addTaskMainBtn.addEventListener('click', () => {
     loadTaskDialog();
     const taskDialog = document.querySelector('#taskDialog');
-    const taskForm = document.querySelector("form");
+    const taskForm = document.querySelector("#addTaskForm");
     taskForm.reset();
     taskDialog.showModal();
 });
+
+const addProjectSidebarBtn = document.querySelector("#add-project-sidebar");
+
+addProjectSidebarBtn.addEventListener('click', () => {
+    loadProjectDialog();
+    const projectDialog = document.querySelector('#projectDialog');
+    const projectForm = document.querySelector("#addProjectForm")
+    projectForm.reset();
+    projectDialog.showModal();
+})
 
 
 
@@ -51,6 +61,7 @@ function loadTaskDialog() {
     taskProjectInput.setAttribute('placeholder', 'Project name');
 
     taskDialog.setAttribute('id',"taskDialog");
+    taskDialog.setAttribute('class', "dialog");
     taskForm.setAttribute('id',"addTaskForm");
     topSection.setAttribute('id', "topFormSection");
     bottomSection.setAttribute('id', "bottomFormSection");
@@ -103,6 +114,8 @@ function getDialogTaskInput() {
     if (projectName === "") {
         projectName = "Inbox";
         project = projectName;
+    } else if (getProject(projectName)) {
+        project = projectName;
     } else {
         let newProject = new Project(projectName);
         projectStorage.push(newProject);    
@@ -112,9 +125,6 @@ function getDialogTaskInput() {
     return new Task(name, priority, dueDate, project);
 }
 
-function getTaskCardInput() {
-    const name = document.getele
-}
 
 function addTask (event) {
     event.preventDefault();
@@ -127,7 +137,7 @@ function addTask (event) {
     } else {
         project.addTasks(newTask);
         loadAllTasks();
-        loadProjectList(projectStorage);
+        loadProjectList();
 
         const taskDialog = document.querySelector("#taskDialog");
         taskDialog.close();
@@ -144,8 +154,8 @@ function removeTask (task) {
 
 function closeDialog (event) {
     event.preventDefault();
-    const taskDialog = document.querySelector("#taskDialog");
-    taskDialog.close();
+    const dialog = document.querySelector(".dialog");
+    dialog.close();
 }
 
 function clickOutsideModal(event) {
@@ -232,6 +242,7 @@ function loadAllTasks() {
 
 /* Project List */
 
+
 function createProjectLink(project) {
     const projectListContainer = document.getElementById('project-list-container')
     const projectLink = document.createElement('a');
@@ -245,11 +256,11 @@ function createProjectLink(project) {
 
 }
 
-function loadProjectList(projectArr) {
+function loadProjectList() {
     const projectList = document.getElementById('project-list-container');
     refreshList(projectList);
-    for(let project in projectArr) {
-        createProjectLink(projectArr[project]);
+    for(let project in projectStorage) {
+        createProjectLink(projectStorage[project]);
     }
 }
 
@@ -259,6 +270,72 @@ function getProject(project) {
         item.name === project)
     return rightProject;
 }
+
+
+/* Add Project Modal */
+
+function addProject(event) {
+    event.preventDefault();
+    let project = document.getElementById('addproject-name-input').value;
+    const projectDialog = document.getElementById('projectDialog');
+
+    if (project === "") {
+        alert("Please provide a name for your project.")
+    } else if (getProject(project)) {
+        alert("This project already exists. Please choose a different name for your project.")
+    } else {
+        let newProject = new Project(project);
+        projectStorage.push(newProject); 
+        createProjectLink(newProject);
+        loadProjectList();
+        projectDialog.close();
+    }
+}
+
+function loadProjectDialog() {
+    const projectDialog = document.createElement('dialog');
+    const projectForm = document.createElement('form');
+    const topSection = document.createElement('div');
+    const bottomSection = document.createElement('div');
+    const projectNameInput = document.createElement('input');
+    const confirmAddBtn = document.createElement('button');
+    const cancelAddBtn = document.createElement('button');
+
+    const formElements = [topSection, bottomSection];
+    
+    projectNameInput.setAttribute ('placeholder',"Project name");
+
+    projectDialog.setAttribute('id',"projectDialog");
+    projectDialog.setAttribute('class', "dialog");
+    projectForm.setAttribute('id',"addProjectForm");
+    topSection.setAttribute('id', "topProjectFormSection");
+    bottomSection.setAttribute('id', "bottomProjectFormSection");
+    projectNameInput.setAttribute('id', 'addproject-name-input');
+   
+    confirmAddBtn.setAttribute ('id', "confirm-add-project-btn");
+    cancelAddBtn.setAttribute ('id', "cancel-add-project-btn");
+
+    confirmAddBtn.textContent = "Add";
+    cancelAddBtn.textContent = "Cancel";
+
+    topSection.appendChild(projectNameInput);
+
+    confirmAddBtn.addEventListener('click', addProject);
+    cancelAddBtn.addEventListener('click', closeDialog);
+
+    bottomSection.appendChild(confirmAddBtn);
+    bottomSection.appendChild(cancelAddBtn);
+
+    formElements.forEach((item) => projectForm.appendChild(item));
+    
+    projectDialog.appendChild(projectForm);
+    projectDialog.addEventListener("click", clickOutsideModal);
+    document.body.appendChild(projectDialog);
+
+
+    return projectDialog;
+}
+
 
 /* CSS Related Code
 ____________________________ */
