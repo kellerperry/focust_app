@@ -1,41 +1,41 @@
 export default class Task {
-    constructor(title, project, priority, dueDate) {
-        this.title = title;
-        this.project = project;
+    constructor(name, priority, dueDate, project) {
+        this.name = name;
         this.priority = priority;
         this.dueDate = dueDate;
+        this.project = project;
     }
 
-    getTitle = () => {
-        return this.title;
+    get name () {
+        return this._name;
     }
 
-    setTitle = (newTitle) => {
-        newTitle = null ? alert("Please give your task a name.") : this.title = newTitle;
+    set name (newName) {
+        newName = "" ? alert("Please give your task a name.") : this._name = newName;
     }
 
-    getProject = () => {
-        return this.project;
+    get project () {
+        return this._project;
     }
 
-    setProject = (newProject) => {
-        newProject === null ? this.project = "today" : this.project = newProject;
+    set project (newProject) {
+        newProject === null ? this.project = "Today" : this._project = newProject;
     }
 
-    getPriority = () => {
+    get Priority () {
         return this.priority
     }
 
-    setPriority = (newPriority) => {
-        newPriority = null ? this.priority = 0 : this.priority = newPriority;
+    set Priority (newPriority) {
+        newPriority = null ? this.priority = 0 : this._priority = newPriority;
     }
 
-    getDueDate = () => {
-        return this.dueDate;
+    get dueDate () {
+        return this._dueDate;
     }
 
-    setDueDate = (newDueDate) => {
-        this.dueDate = newDueDate;
+    set dueDate (newDueDate) {
+        newDueDate === null ? this._dueDate = new Date() : this._dueDate = newDueDate;
     }
 
 }

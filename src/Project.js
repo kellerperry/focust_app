@@ -1,24 +1,27 @@
 export default class Project {    
-    tasks = [];
-
     constructor(name) {
         this.name = name;
+        this.tasks = [];
     }
 
-    getName = () => {
-        return this.name;
+    get name () {
+        return this._name;
     }
 
-    setName = (newName) => {
-        newName === null ? alert("Please choose a name for your project.") : this.name = newName;
+    set name (newName) {
+        newName === null ? alert("Please choose a name for your project.") : this._name = newName;
     }
 
-    addTask = (task) => {
-        task.setProject = this.getName();
+    getTasks() {
+        return this._tasks;
+    }
+
+    addTasks(task) {
         this.tasks.push(task);
-    }
+    } 
+
 
     removeTask = (deletedTask) => {
-        this.tasks = tasks.filter((task) => task.getName() !== deletedTask.getName())
+        this.tasks = tasks.filter((task) => task.name !== deletedTask.name)
     }
 }

@@ -1,86 +1,15 @@
 import './style.css';
 import { loadImages } from './loadImages';
-
-
-class Task {
-    constructor(name, priority, dueDate, project) {
-        this.name = name;
-        this.priority = priority;
-        this.dueDate = dueDate;
-        this.project = project;
-    }
-
-    get name () {
-        return this._name;
-    }
-
-    set name (newName) {
-        newName = "" ? alert("Please give your task a name.") : this._name = newName;
-    }
-
-    get project () {
-        return this._project;
-    }
-
-    set project (newProject) {
-        newProject === null ? this.project = "Today" : this._project = newProject;
-    }
-
-    get Priority () {
-        return this.priority
-    }
-
-    set Priority (newPriority) {
-        newPriority = null ? this.priority = 0 : this._priority = newPriority;
-    }
-
-    get dueDate () {
-        return this._dueDate;
-    }
-
-    set dueDate (newDueDate) {
-        newDueDate === null ? this._dueDate = new Date() : this._dueDate = newDueDate;
-    }
-
-}
-
-class Project {    
-    constructor(name) {
-        this.name = name;
-        this.tasks = [];
-    }
-
-    get name () {
-        return this._name;
-    }
-
-    set name (newName) {
-        newName === null ? alert("Please choose a name for your project.") : this._name = newName;
-    }
-
-    getTasks() {
-        return this._tasks;
-    }
-
-    addTasks(task) {
-        this.tasks.push(task);
-    } 
-
-
-    removeTask = (deletedTask) => {
-        this.tasks = tasks.filter((task) => task.name !== deletedTask.name)
-    }
-}
-
+import Task from './Task';
+import Project from './Project';
 
 
 //Default Objects__________________
 
 const projectStorage = [];
 const Inbox = new Project('Inbox');
-const Today = new Project("Today");
 
-projectStorage.unshift(Inbox, Today);
+projectStorage.unshift(Inbox);
 
 
 /* DOM-Related Code 
@@ -176,10 +105,9 @@ function getTaskInput() {
         project = projectName;
     } else {
         let newProject = new Project(projectName);
-        projectStorage.push(newProject);
+        projectStorage.push(newProject);    
         project = newProject.name;
     }
-
 
     return new Task(name, priority, dueDate, project);
 }
@@ -194,7 +122,7 @@ function addTask (event) {
         alert("Please give your task a name.")
     } else {
         project.addTasks(newTask);
-        loadTaskList(Inbox);
+        loadAllTasks();
         loadProjectList(projectStorage);
 
         const taskDialog = document.querySelector("#taskDialog");
@@ -255,9 +183,18 @@ function loadTaskList(project) {
     const taskList = document.getElementById('task-list-container');
     refreshList(taskList);
     const taskProject = project.tasks;
-    for (let task in taskProject) {
-        console.log(taskProject)
-        createTaskCard(taskProject[task]);
+    taskProject.forEach((task) => createTaskCard(taskProject[task]));
+
+}
+
+function loadAllTasks() {
+    const taskList = document.getElementById('task-list-container');
+    refreshList(taskList);
+    for(const projects of projectStorage) {
+        const tasks = projects.tasks;
+        for (const task of tasks) {
+            createTaskCard(task)
+        }
     }
 }
 
@@ -278,7 +215,7 @@ function createProjectLink(project) {
     const projectLink = document.createElement('a');
     projectLink.setAttribute('class', 'project-menu-title');
     projectLink.setAttribute('id', `project-menu-title-${project.name}`);
-    projectLink.addEventListener('click', loadTaskList(project));
+    // projectLink.addEventListener('click', loadTaskList(project));
 
     projectLink.innerText = project.name;
     
