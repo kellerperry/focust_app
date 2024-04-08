@@ -1,4 +1,5 @@
-import '../styles/style.css'
+import '../styles/style.css';
+import 'boxicons';
 import { loadImages } from '../loadImages';
 import Task from './Task';
 import Project from './Project';
@@ -10,6 +11,30 @@ const projectStorage = [];
 const Inbox = new Project('Inbox');
 
 projectStorage.unshift(Inbox);
+
+
+
+// DROPDOWN TESTING
+
+const dropdownBtn = document.getElementById("btn");
+const dropdownMenu = document.getElementById("dropdown");
+const toggleArrow = document.getElementById("arrow");
+
+const toggleDropdown = function () {
+    dropdownMenu.classList.toggle("show");
+    toggleArrow.classList.toggle("arrow");
+};
+
+dropdownBtn.addEventListener('click', (e) => {
+    e.stopPropagation();
+    toggleDropdown();
+})
+
+document.documentElement.addEventListener("click", function () {
+    if (dropdownMenu.classList.contains("show")) {
+      toggleDropdown();
+    }
+  });
 
 
 /* DOM-Related Code 
@@ -39,7 +64,7 @@ addProjectSidebarBtn.addEventListener('click', () => {
 
 
 
-/* Task Modal */
+/* Task Modal __________________*/
 
 
 function loadTaskDialog() {
@@ -165,27 +190,43 @@ function clickOutsideModal(event) {
 }
 
 
-/* Task Card */
+/* Task Card __________________*/
 
 function createTaskCard(task) {
     const taskListContainer = document.getElementById('task-list-container')
     const taskContainer = document.createElement('div');
     const taskTitle = document.createElement('p');
-    const taskProject = document.createElement('a');
+    const taskProject = document.createElement('button');
     const deleteTaskBtn = document.createElement('button');
+    // const deleteTaskTooltip = document.createElement('span');
 
     taskContainer.setAttribute('class', 'task-container');
     taskTitle.setAttribute('class', 'taskTitle');
-    taskProject.setAttribute('class', "task-project");
-    deleteTaskBtn.setAttribute('class', "taskCard-delete-task")
+    taskProject.setAttribute('class', "task-project project-link");
+    deleteTaskBtn.setAttribute('class', "taskCard-delete-task deleteBtn")
+    // deleteTaskTooltip.setAttribute('class', 'tooltip');
+    
     
     taskTitle.innerText = task.name;
     taskProject.innerText = task.project;
     deleteTaskBtn.innerText = "X";
+    // deleteTaskTooltip.innerText = "Delete task";
+
+    const project = getProject(task.project);
+
+    taskProject.addEventListener('click', () => {
+        changeListHeader(project.name);
+        if(project.name === "Inbox") {
+            loadAllTasks();
+        } else {
+        loadChosenProjectTasks(project);
+        }
+    })
 
     deleteTaskBtn.addEventListener('click', () => {
         removeTask(task);
     });
+
 
     taskContainer.appendChild(taskTitle);
     taskContainer.appendChild(deleteTaskBtn);
@@ -198,16 +239,16 @@ function createTaskCard(task) {
 
 
 
-/* Task List */
+/* Task List __________________*/
 
 
 function refreshList(list) {
     list.innerHTML = "";
 }
 
-function getCurrentTaskList() {
-    const currentTaskHeader = document.getElementById("task-section-header").value;
-
+function changeListHeader(project) {
+    const currentProject = document.getElementById('current-project-header');
+    currentProject.innerText = `${project.name}`;
 }
 
 function loadTaskList(project) {
@@ -229,6 +270,20 @@ function loadAllTasks() {
     }
 }
 
+function loadChosenProjectTasks(project) {
+    const taskList = document.getElementById('task-list-container');
+    refreshList(taskList);
+
+    const currentProjectHeader = document.getElementById('current-project-header')
+    currentProjectHeader.textContent = project.name;
+
+    const tasks = project.tasks;
+    
+    for (const task of tasks) {
+        createTaskCard(task);
+    }
+}
+
 
 // function displayTasks() {
 //     refreshTaskList();
@@ -240,20 +295,94 @@ function loadAllTasks() {
 // }
 
 
-/* Project List */
+
+
+/* Project List __________________*/
 
 
 function createProjectLink(project) {
     const projectListContainer = document.getElementById('project-list-container')
-    const projectLink = document.createElement('a');
-    projectLink.setAttribute('class', 'project-menu-title');
-    projectLink.setAttribute('id', `project-menu-title-${project.name}`);
-    // projectLink.addEventListener('click', loadTaskList(project));
+    const projectLinkContainer = document.createElement('div');
+    const projectLink = document.createElement('button');
+    const projectIconSpan = document.createElement('span');
+    const projectIcon = document.createElement('box-icon');
+    const projectName = document.createElement('div');
 
-    projectLink.innerText = project.name;
+    const projectMenuButtonDiv = document.createElement('div');
+    const projectMenuButton = document.createElement('button');
+    const projectMenuButtonIcon = document.createElement('box-icon');
     
-    projectListContainer.appendChild(projectLink);
 
+    projectLinkContainer.setAttribute('class', 'project-link-container');
+    projectLinkContainer.setAttribute('id', `project-link-${project.name}`);
+    projectLink.setAttribute('class', 'project-menu-title project-link');
+    projectIcon.setAttribute('class', 'project-menu-icon');
+    projectName.setAttribute('id', `project-menu-title-${project.name}`);
+
+    projectMenuButtonDiv.setAttribute('class', 'project-dropdown-button-div');
+    projectMenuButton.setAttribute('class', 'project-dropdown-btn');
+    projectMenuButtonIcon.setAttribute('class', 'project-dropdown-icon');
+    projectMenuButtonIcon.setAttribute('name', 'dots-horizontal-rounded');
+
+    projectIcon.setAttribute('name', 'folder');
+    projectIcon.setAttribute('type', '');
+
+    projectName.innerText = project.name;
+
+
+    // deleteProject.setAttribute('class', 'project-delete-btn deleteBtn');
+
+    
+    projectLinkContainer.addEventListener('click', () => {
+        if(project.name === "Inbox") {
+            loadAllTasks();
+            changeListHeader(project);
+            return;
+        }
+        loadChosenProjectTasks(project)
+    });
+
+    // projectLink.addEventListener('mouseover', switchHidden);
+    // projectLink.addEventListener('mouseout', switchHidden);
+
+
+    projectIconSpan.appendChild(projectIcon);
+
+    projectLink.appendChild(projectIconSpan);
+    projectLink.appendChild(projectName);
+
+    projectMenuButton.appendChild(projectMenuButtonIcon)
+    projectMenuButtonDiv.appendChild(projectMenuButton)
+
+    projectLinkContainer.appendChild(projectLink);
+    projectLinkContainer.appendChild(projectMenuButtonDiv);
+    
+    projectListContainer.appendChild(projectLinkContainer);
+
+}
+
+
+function changeProjectLinkColor() {
+    const allProjectLinks = document.querySelectorAll('.project-link-container');
+
+    allProjectLinks.forEach((projectLink) => {
+        projectLink.addEventListener("click", (e) => {
+            const selected = document.querySelector('.project-link-active');
+            const allProjectIcons = document.querySelectorAll('.project-menu-icon');
+            
+            allProjectIcons.forEach((icon) => {
+                icon.setAttribute('type', 'regular');
+            });
+
+            if (selected) {
+                selected.classList.remove('project-link-active')
+            } 
+            projectLink.classList.add('project-link-active')
+            const projectIcon = projectLink.querySelector(".project-menu-icon")
+            console.log(projectIcon);
+            projectIcon.setAttribute("type", "solid")
+        });
+    });
 }
 
 function loadProjectList() {
@@ -262,6 +391,7 @@ function loadProjectList() {
     for(let project in projectStorage) {
         createProjectLink(projectStorage[project]);
     }
+    changeProjectLinkColor();
 }
 
 
@@ -272,7 +402,16 @@ function getProject(project) {
 }
 
 
-/* Add Project Modal */
+/*Project Menu Dropdown __________________*/
+
+function createProjectDropDown() {
+
+}
+
+
+
+
+/* Add Project Modal __________________*/
 
 function addProject(event) {
     event.preventDefault();

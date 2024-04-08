@@ -4,6 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Focust</title>
+    <link 
+     href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" 
+     rel="stylesheet"
+    />
 </head>
 <body>
     <div class="sidebar">
@@ -25,14 +29,48 @@
     </div>
     <main>
         <div id="task-section">
-            <div id="task-section-header"></div>
+            <div id="current-project">
+                <h1 id="current-project-header">Inbox</h1>
+            </div>
             <div id="task-list-container"></div>
             <button class="addtask main-content-btn" id="addTaskMainBtn">
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-plus"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg> 
                 Add task
             </button>
-
         </div>
+
+        <div class="container">
+            <button class="btn" id="btn">
+                Dropdown
+                <i class="bx bx-chevron-down" id="arrow"></i>
+              </button>
+        </div>
+        <div class="dropdown" id="dropdown">
+            <a href="#create">
+              <i class="bx bx-plus-circle"></i>
+              Create New
+            </a>
+            <a href="#draft">
+              <i class="bx bx-book"></i>
+              All Drafts
+            </a>
+            <a href="#move">
+              <i class="bx bx-folder"></i>
+              Move To
+            </a>
+            <a href="#profile">
+              <i class="bx bx-user"></i>
+              Profile Settings
+            </a>
+            <a href="#notification">
+              <i class="bx bx-bell"></i>
+              Notification
+            </a>
+            <a href="#settings">
+              <i class="bx bx-cog"></i>
+              Settings
+            </a>
+          </div>
     </main>
 </body>
 </html>

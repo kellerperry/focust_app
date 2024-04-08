@@ -16,8 +16,73 @@ a {
 }
 
 button {
+    
+    vertical-align: middle;
+    text-align: center;
     background-color: transparent;
 }
+
+
+
+/* DROPDOWN TESTING */
+
+.btn {
+    background-color: white;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    column-gap: var(--gap);
+    padding: 0.6rem;
+    cursor: pointer;
+    border-radius: var(--radius);
+    border: none;
+    box-shadow: var(--shadow);
+    position: relative;
+  }
+  
+  .bx {
+    font-size: 1.1rem;
+  }
+  
+  .dropdown {
+    position: absolute;
+    width: 250px;
+    box-shadow: var(--shadow);
+    border-radius: var(--radius);
+    margin-top: 0.3rem;
+    background: white;
+
+    transform: translateY(0.5rem);
+    visibility: hidden;
+    opacity: 0;
+  }
+  
+  .dropdown a {
+    display: flex;
+    align-items: center;
+    column-gap: var(--gap);
+    padding: 0.8rem 1rem;
+    text-decoration: none;
+    color: black;
+  }
+  
+  .dropdown a:hover {
+    background-color: var(--color);
+    color: white;
+  }
+
+  .show {
+    transform: translateY(0rem);
+    visibility: visible;
+    opacity: 1;
+  }
+
+  .arrow {
+    transform: rotate(180deg);
+    transition: 0.2s ease;
+  }
+
+
 
 /* Sidebar _____________ */
 
@@ -44,19 +109,81 @@ button {
 }
 
 #project-list-container {
-    display: grid;
-    grid-template-rows: auto;
+    display: flex;
+    flex-direction: column;
     gap: 15px;
     justify-content: center;
 }
 
 .project-menu-title {
-    margin-top: 10px;
+    
 }
 
 .project-menu-title:hover {
     cursor: pointer;
 }
+
+.project-link-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    flex-grow: 1;
+    align-items: center;
+    margin-top: 4px;
+    border-radius: 5px;
+}
+
+.project-link-container:hover {
+    cursor: pointer;
+    background-color:rgb(221, 221, 221);
+}
+
+
+
+.project-link {
+    display: flex;
+    align-items: center;
+    flex: 1;
+    border: none;
+    gap: 8px;
+}
+
+.project-link-active, .project-link-active:hover {
+  background-color: rgb(177, 177, 177);
+}
+
+
+
+.project-dropdown-button-div {
+    box-sizing: border-box;
+}
+
+.project-dropdown-icon {
+    display: none;
+}
+
+.project-link-container:hover .project-dropdown-icon {
+    display: block;
+}
+
+.project-dropdown-btn {
+    border: none;
+    display: flex;
+    align-items: center;
+    padding: 0;
+    margin-right: 2px;
+}
+
+.project-dropdown-btn:hover {
+    cursor: pointer;
+    background-color: rgb(226, 226, 226);
+    border-radius: 5px;
+}
+
+.hidden {
+    display: none;
+}
+
 
 .current-project {
     display: flex;
@@ -80,7 +207,7 @@ button {
 
 main {
     width: 100%;
-    padding: 5rem 15rem;
+    padding: 5rem 10rem;
     display: flex;
     flex-direction: column;
     align-content: center;
@@ -94,6 +221,71 @@ main {
 .task-section-header {
     font-size: 3rem;
 }
+
+.task-container {
+    display: grid;
+    grid-template-rows: repeat(2, 2rem);
+    margin-top: 2rem;
+}
+
+.taskTitle {
+    grid-column-start: 1;
+    grid-column-end: 2;
+}
+
+.task-project { 
+    grid-column-start: 3;
+    grid-row-start: 2;
+    border: none;
+    cursor: pointer;
+    justify-self: end;
+    align-self: self-end;
+}
+
+.task-project:hover {
+    color: rgb(177, 177, 177);
+    border-radius: 10px;
+}
+
+
+/* Delete Task & Project Buttons */
+
+.taskCard-delete-task {
+    grid-column-start: 3;
+    grid-row-start: 1;
+    grid-row-end: 2;
+    width: 25px;
+    height: 25px;
+    justify-self: end;
+}
+
+.deleteBtn {
+    display: none;
+    border: none;
+    cursor: pointer;
+}
+
+.deleteBtn:hover {
+    border: 1px solid rgb(189, 189, 189);
+    background-color: rgb(133, 132, 132);
+    color: rgb(255, 255, 255);
+}
+
+
+.task-container:hover > .taskCard-delete-task {
+    display: block;
+}
+
+.task-container:hover {
+    cursor: pointer;
+}
+
+.project-link-container:hover > .deleteBtn {
+    display: block;
+}
+
+
+
 
 /* Task Modal & Form __________________ */
 
@@ -228,10 +420,6 @@ form > div button:hover {
     border: none;
 }
 
-.task-project { 
-    display: flex;
-    justify-content: end;
-}
 
 .user-options {
     display: flex;
